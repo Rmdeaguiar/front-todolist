@@ -1,0 +1,80 @@
+.container-table {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.table {
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    margin-right: 30px;
+}
+
+.table h2 {
+    font-size: 1.8rem;
+}
+
+.table p {
+    font-size: 1.2rem;
+}
+
+.table-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    padding: 10px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.table-title h4 {
+    color: #FFF;
+    position: absolute;
+    right: 15px;
+    border: 2px solid #FFF;
+    color: #FFF;
+    padding: 3px;
+    border-radius: 10px;
+    font-weight: lighter;
+    cursor: pointer;
+}
+
+.table-done {
+    background-color: green;
+}
+
+.table-to-do {
+    background-color: crimson;
+}
+
+.tasks-list {
+    display: flex;
+    padding: 15px;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid gray;
+    border-top: none;
+    height: 45px;
+    text-overflow: ellipsis;
+}
+
+.icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icons img {
+    width: 16px;
+    cursor: pointer;
+    margin-left: 10px;
+
+}
+
+.tasks-list:last-child {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}

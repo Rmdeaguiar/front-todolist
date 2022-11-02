@@ -1,0 +1,47 @@
+.container-signup {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+}
+
+.content-signup {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.content-signup h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.content-signup p {
+    font-size: 1.05rem;
+    margin-top: 20px;
+}
+
+.content-signup span {
+    cursor: pointer;
+    color: blue;
+}
+
+.form-signup {
+    position: relative;
+}
+
+.form-signup form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.form-signup img {
+    width: 12px;
+    position: absolute;
+    left: 235px;
+    bottom: 105px;
+    cursor: pointer;
+}

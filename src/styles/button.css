@@ -1,0 +1,24 @@
+button {
+    width: 260px;
+    height: 30px;
+    margin-top: 10px;
+    padding: 5px;
+    color: #FFF;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.5;
+}
+
+.red-btn {
+    background: #FB0615;
+}
+
+.green-btn {
+    background: #04C45C;
+
+}
