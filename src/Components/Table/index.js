@@ -15,16 +15,28 @@ function Table() {
     const [doneTasks, setDoneTasks] = useState([]);
     const [toDoTasks, setToDoTasks] = useState([]);
     const [description, setDescription] = useState('');
-    const [task, setTask] = useState({});
-    const [noTask, setNoTask] = useState(true)
-    const [taskDoneOk, setTaskDoneOk] = useState(false)
-
+    const [currentTask, setCurrentTask] = useState({});
+    const [noTask, setNoTask] = useState(true);
+    const [noTaskDone, setNoTaskDone] = useState(true);
+    const [update, setUpdate] = useState(true);
 
     useEffect(() => {
+
         loadTasks()
         loadTasksDone()
 
-    }, [openTask]);
+        if (toDoTasks.length > 0) {
+            setNoTask(false)
+        } else {
+            setNoTask(true)
+        }
+        if (doneTasks.length > 0) {
+            setNoTaskDone(false)
+        } else {
+            setNoTaskDone(true)
+        }
+
+    }, [update]);
 
     async function loadTasks() {
         const response = await api.get(`/task/${userId}`, {
@@ -35,7 +47,6 @@ function Table() {
             }
         });
         setToDoTasks(response.data);
-
     }
 
     async function loadTasksDone() {
@@ -52,22 +63,32 @@ function Table() {
     function handleEditTask(task) {
         setOpenTask(true);
         setEditTask(true);
-        setTask(task)
+        setCurrentTask(task)
         setDescription(task.description);
     }
 
     async function handleDeleteTask(task) {
-        const response = await api.delete(`/task/${task.id}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            }
-        });
-        loadTasks()
+        setCurrentTask(task)
+
+        const response = await api.delete(`/task/${task.id}`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
+            });
+
+
+        if (!response.data.length) {
+            setToDoTasks([]);
+        }
+
+        setUpdate(!update)
     }
 
     async function handleDeleteTaskDone(task) {
+
         const response = await api.delete(`/done/${task.id}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -75,7 +96,11 @@ function Table() {
                 'Access-Control-Allow-Origin': '*'
             }
         });
-        loadTasksDone()
+        if (!response.data.length) {
+            setDoneTasks([]);
+        }
+
+        setUpdate(!update)
     }
 
     async function handleCheckTask(task) {
@@ -90,19 +115,35 @@ function Table() {
                 'Access-Control-Allow-Origin': '*'
             }
         });
-        loadTasks()
-        loadTasksDone()
+        loadTasksDone();
+
+        const responseDelete = await api.delete(`/task/${task.id}`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
+            });
+        if (!responseDelete.data.length) {
+            setToDoTasks([]);
+        }
+
+        setUpdate(!update)
     }
 
-
+    function handleOpenModalTask() {
+        setOpenTask(true)
+        setUpdate(!update)
+    }
 
     return (
         <>
             <div className='container-table'>
                 <div className='table'>
                     <div className='table-title table-to-do'>
-                        <h2>To-Do</h2>
-                        <h4 onClick={() => setOpenTask(true)}>Nova Tarefa +</h4>
+                        <h2>Pendentes</h2>
+                        <h4 onClick={() => handleOpenModalTask()}>Nova Tarefa +</h4>
                     </div>
                     {!noTask ? toDoTasks.map((task) => (
                         <div key={task.id} className='tasks-list'>
@@ -122,9 +163,9 @@ function Table() {
                 </div>
                 <div className='table'>
                     <div className='table-title table-done'>
-                        <h2>Done</h2>
+                        <h2>Concluídas</h2>
                     </div>
-                    {taskDoneOk ? doneTasks.map((task) => (
+                    {!noTaskDone ? doneTasks.map((task) => (
                         <div key={task.id} className='tasks-list'>
                             <p>{task.description}</p>
                             <div className='icons'>
@@ -145,9 +186,14 @@ function Table() {
                     openTask={openTask}
                     setEditTask={setEditTask}
                     editTask={editTask}
-                    task={task}
+                    currentTask={currentTask}
                     description={description}
                     setDescription={setDescription}
+                    setNoTask={setNoTask}
+                    noTask={noTask}
+                    setUpdate={setUpdate}
+                    update={update}
+                    loadTasks={loadTasks}
                 />}
         </>
     );

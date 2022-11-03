@@ -2,7 +2,7 @@ import './styles.css';
 import { getItem } from '../../utils/storage'
 import api from '../../services/api'
 
-function ModalTask({ setOpenTask, editTask, setEditTask, task, description, setDescription }) {
+function ModalTask({ setOpenTask, editTask, setEditTask, currentTask, description, setDescription, setNoTask, setUpdate, update, loadTasks }) {
     const userId = getItem('userId');
     const token = getItem('token')
 
@@ -10,17 +10,19 @@ function ModalTask({ setOpenTask, editTask, setEditTask, task, description, setD
         setOpenTask(false)
         setEditTask(false)
         setDescription('');
+        setUpdate(!update)
     }
 
     async function handleTask(e) {
         e.preventDefault();
+        setUpdate(!update)
 
         if (!description) {
             return
         }
 
         if (editTask) {
-            const response = await api.put(`/task/${task.id}`, {
+            const response = await api.put(`/task/${currentTask.id}`, {
                 description
             },
                 {
@@ -34,6 +36,9 @@ function ModalTask({ setOpenTask, editTask, setEditTask, task, description, setD
             if (response.status > 204) {
                 return
             }
+            loadTasks()
+            setUpdate(!update)
+            setNoTask(false)
             setEditTask(false)
             setOpenTask(false);
             setDescription('');
@@ -51,11 +56,17 @@ function ModalTask({ setOpenTask, editTask, setEditTask, task, description, setD
                 }
             })
 
+
+
         if (response.status > 204) {
             return
         }
+        loadTasks()
+
+        setNoTask(false)
         setOpenTask(false);
         setDescription('');
+        setUpdate(!update)
     }
 
     return (

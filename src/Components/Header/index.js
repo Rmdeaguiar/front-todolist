@@ -18,7 +18,7 @@ function Header() {
         <div className='container-header'>
             <div className='welcome-title'>
                 <h1>Olá, {name}!</h1>
-                <h3>Essas são as suas atividades</h3>
+                <h3>{'Essas são as suas atividades =)'}</h3>
             </div>
             <img src={Exit} alt='exit' onClick={() => exitLogin()} />
         </div>

@@ -5,7 +5,8 @@
     width: 100%;
     height: 100px;
     margin-bottom: 30px;
-    background-color: rgb(194, 194, 194)
+    background-color: rgb(7, 7, 91, 0.9);
+    color: #FFF
 }
 
 .container-header img {
@@ -14,6 +15,7 @@
 }
 
 .container-header h1 {
+    margin-bottom: 8px;
     font-size: 2.6rem;
 }
 
