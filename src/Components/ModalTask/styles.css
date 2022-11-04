@@ -34,3 +34,29 @@
 .new-task input {
     margin: 25px 0px;
 }
+
+@media (max-width: 600px) {
+    .new-task h2 {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    .new-task input {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 3px;
+        width: 90%;
+        font-size: 0.8rem;
+    }
+
+    .new-task button {
+        width: 90%;
+        font-size: 1rem;
+    }
+
+    .new-task form {
+        height: 25%;
+    }
+
+
+}

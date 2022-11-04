@@ -68,13 +68,41 @@
 }
 
 .icons img {
-    width: 16px;
+    width: 12px;
+    margin-left: 3px;
     cursor: pointer;
-    margin-left: 10px;
 
 }
 
 .tasks-list:last-child {
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
+}
+
+@media (max-width: 600px) {
+    .table h2 {
+        font-size: 1rem;
+    }
+
+    .table-to-do {
+        justify-content: space-between;
+    }
+
+    .table-to-do h4 {
+        font-size: 0.8rem;
+        border: 1.5px solid #FFF;
+        right: 5px;
+    }
+
+    .tasks-list h3 {
+        font-size: 0.9rem;
+    }
+
+    .icons img {
+        font-size: 0.9rem;
+    }
+
+    .table p {
+        font-size: 0.9rem;
+    }
 }

@@ -29,6 +29,7 @@ function Table() {
             setNoTask(false)
         } else {
             setNoTask(true)
+
         }
         if (doneTasks.length > 0) {
             setNoTaskDone(false)
@@ -47,6 +48,9 @@ function Table() {
             }
         });
         setToDoTasks(response.data);
+        if (response.data.length) {
+            setNoTask(false)
+        }
     }
 
     async function loadTasksDone() {
@@ -58,6 +62,9 @@ function Table() {
             }
         });
         setDoneTasks(responseDone.data);
+        if (responseDone.data.length) {
+            setNoTaskDone(false)
+        }
     }
 
     function handleEditTask(task) {
