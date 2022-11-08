@@ -21,51 +21,30 @@ function Table() {
     const [update, setUpdate] = useState(true);
 
     useEffect(() => {
+        async function loadAllTasks() {
+            const response = await api.get(`/task/${userId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
+            });
+            setToDoTasks(response.data);
+            response.data.length ? setNoTask(false) : setNoTask(true)
 
-        loadTasks()
-        loadTasksDone()
-
-        if (toDoTasks.length > 0) {
-            setNoTask(false)
-        } else {
-            setNoTask(true)
-
+            const responseDone = await api.get(`/done/${userId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
+            });
+            setDoneTasks(responseDone.data);
+            responseDone.data.length ? setNoTaskDone(false) : setNoTaskDone(true)
         }
-        if (doneTasks.length > 0) {
-            setNoTaskDone(false)
-        } else {
-            setNoTaskDone(true)
-        }
+        loadAllTasks();
+    }, [update, token, userId]);
 
-    }, [update]);
-
-    async function loadTasks() {
-        const response = await api.get(`/task/${userId}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            }
-        });
-        setToDoTasks(response.data);
-        if (response.data.length) {
-            setNoTask(false)
-        }
-    }
-
-    async function loadTasksDone() {
-        const responseDone = await api.get(`/done/${userId}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            }
-        });
-        setDoneTasks(responseDone.data);
-        if (responseDone.data.length) {
-            setNoTaskDone(false)
-        }
-    }
 
     function handleEditTask(task) {
         setOpenTask(true);
@@ -122,7 +101,10 @@ function Table() {
                 'Access-Control-Allow-Origin': '*'
             }
         });
-        loadTasksDone();
+
+        if (!response) {
+            return
+        }
 
         const responseDelete = await api.delete(`/task/${task.id}`,
             {
@@ -200,7 +182,7 @@ function Table() {
                     noTask={noTask}
                     setUpdate={setUpdate}
                     update={update}
-                    loadTasks={loadTasks}
+                    setToDoTasks={setToDoTasks}
                 />}
         </>
     );

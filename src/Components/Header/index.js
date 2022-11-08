@@ -10,6 +10,7 @@ function Header() {
     const [name, setName] = useState(getItem('userName'));
 
     function exitLogin() {
+        setName('')
         clear();
         navigate("/");
     }

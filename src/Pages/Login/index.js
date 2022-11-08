@@ -22,7 +22,7 @@ export default function Login() {
         if (token) {
             navigate('/home');
         }
-    }, []);
+    }, [navigate]);
 
     async function handleLogin(e) {
         e.preventDefault();

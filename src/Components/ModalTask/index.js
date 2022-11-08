@@ -2,9 +2,25 @@ import './styles.css';
 import { getItem } from '../../utils/storage'
 import api from '../../services/api'
 
-function ModalTask({ setOpenTask, editTask, setEditTask, currentTask, description, setDescription, setNoTask, setUpdate, update, loadTasks }) {
+function ModalTask({ setOpenTask, editTask, setEditTask, currentTask, description, setDescription, setNoTask, setUpdate, update, setToDoTasks }) {
     const userId = getItem('userId');
     const token = getItem('token')
+
+    async function loadTasks() {
+        const response = await api.get(`/task/${userId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            }
+        });
+        setToDoTasks(response.data);
+        if (response.data.length) {
+            setNoTask(false)
+            return
+        }
+        setNoTask(true)
+    }
 
     function handleCloseModal() {
         setOpenTask(false)
@@ -55,9 +71,6 @@ function ModalTask({ setOpenTask, editTask, setEditTask, currentTask, descriptio
                     'Access-Control-Allow-Origin': '*'
                 }
             })
-
-
-
         if (response.status > 204) {
             return
         }
