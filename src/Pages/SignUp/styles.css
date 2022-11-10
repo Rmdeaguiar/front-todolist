@@ -45,3 +45,19 @@
     bottom: 105px;
     cursor: pointer;
 }
+
+
+@media (max-width: 600px) {
+    .content-signup {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        width: 100%;
+    }
+
+    .background {
+        display: none;
+    }
+}

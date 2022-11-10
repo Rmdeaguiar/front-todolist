@@ -45,3 +45,18 @@
     top: 88px;
     cursor: pointer;
 }
+
+@media (max-width: 600px) {
+    .content-login {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        width: 100%;
+    }
+
+    .background {
+        display: none;
+    }
+}
