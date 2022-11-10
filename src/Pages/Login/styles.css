@@ -31,6 +31,14 @@
     position: relative;
 }
 
+.form-login span {
+    color: red;
+    position: absolute;
+    top: 115px;
+    left: 55px;
+    font-size: 0.9rem;
+}
+
 .form-login form {
     display: flex;
     flex-direction: column;

@@ -15,6 +15,7 @@ export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         const token = getItem('token');
@@ -24,8 +25,10 @@ export default function Login() {
         }
     }, [navigate]);
 
+
     async function handleLogin(e) {
         e.preventDefault();
+        setError(false)
 
         try {
             if (!email || !password) {
@@ -50,6 +53,8 @@ export default function Login() {
             navigate('/home')
 
         } catch (error) {
+            console.log(error.response.data)
+            setError(true)
 
         }
     }
@@ -69,6 +74,7 @@ export default function Login() {
                         <input type='email' name='email' onChange={(e) => setEmail(e.target.value)} />
                         <label htmlFor='password'>Senha</label>
                         <input type={!showPassword ? 'password' : 'text'} name='password' onChange={(e) => setPassword(e.target.value)} />
+                        {error && <span>O e-mail e a senha não coincidem</span>}
                         <img src={!showPassword ? CloseEye : OpenEye} alt='eye' onClick={() => setShowPassword(!showPassword)} />
                         <button className='green-btn'>Entrar</button>
                     </form>

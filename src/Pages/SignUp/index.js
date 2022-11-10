@@ -11,8 +11,12 @@ export default function SignUp() {
     const navigate = useNavigate();
     const [form, setForm] = useState({ name: '', email: '', password: '' });
     const [showPassword, setShowPassword] = useState(false);
+    const [errorEmail, setErrorEmail] = useState(false);
+    const [error, setError] = useState(false)
 
     function handleChangeForm(e) {
+        setErrorEmail(false)
+        setError(false)
         setForm({ ...form, [e.target.name]: e.target.value });
     }
 
@@ -26,6 +30,7 @@ export default function SignUp() {
 
         try {
             if (!form.name || !form.email || !form.password) {
+                setError(true)
                 return;
             }
 
@@ -34,11 +39,16 @@ export default function SignUp() {
                 email: form.email,
                 password: form.password
             })
-            console.log(response.data);
+
+            if (response.status > 204) {
+                return
+            }
+
             navigate('/')
 
         } catch (error) {
-
+            console.log(error.response.data)
+            setErrorEmail(true)
         }
     }
 
@@ -52,9 +62,11 @@ export default function SignUp() {
                         <input type='text' name='name' value={form.name} onChange={(e) => handleChangeForm(e)} />
                         <label htmlFor='email'>E-mail</label>
                         <input type='email' name='email' value={form.email} onChange={(e) => handleChangeForm(e)} />
+                        {errorEmail && <span>Este e-mail já existe</span>}
                         <label htmlFor='password'>Senha</label>
                         <input type={!showPassword ? 'password' : 'text'} name='password' value={form.password} onChange={(e) => handleChangeForm(e)} />
                         <img src={!showPassword ? CloseEye : OpenEye} alt='eye' onClick={() => setShowPassword(!showPassword)} />
+                        {error && <span>Todos os campos são obrigatórios!</span>}
                         <button className='green-btn'>Cadastrar</button>
                         <button type='button' className='red-btn' onClick={() => handleClearInput()}>Cancelar</button>
                     </form>

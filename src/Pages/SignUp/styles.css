@@ -27,6 +27,14 @@
     color: blue;
 }
 
+.form-signup span {
+    color: red;
+    position: absolute;
+    top: 175px;
+    left: 60px;
+    font-size: 0.8rem;
+}
+
 .form-signup {
     position: relative;
 }
